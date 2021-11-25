@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestConroller {
 	@GetMapping("/test")
 	public String greeting() {
-		return "okay";
+		return "Test Success!";
 	}
 }

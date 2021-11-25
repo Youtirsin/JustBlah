@@ -9,12 +9,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
+@Table(
+		uniqueConstraints = @UniqueConstraint(
+				columnNames = { "name" }
+		)
+)
 public class User implements UserDetails{
 	/**
 	 * 
@@ -30,6 +37,7 @@ public class User implements UserDetails{
 	private String name;
 	private String password;
 	private String email;
+	private String description;
 
 	public User() {
 	}
@@ -38,6 +46,7 @@ public class User implements UserDetails{
 		this.name = name;
 		this.password = password;
 		this.email = email;
+		this.description = "";
 	}
 
 	public Long getId() {
@@ -66,6 +75,14 @@ public class User implements UserDetails{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
@@ -114,7 +131,7 @@ public class User implements UserDetails{
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, id, name, password);
+		return Objects.hash(description, email, id, name, password);
 	}
 
 	@Override
@@ -126,7 +143,8 @@ public class User implements UserDetails{
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(email, other.email) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
+		return Objects.equals(description, other.description) && Objects.equals(email, other.email)
+				&& Objects.equals(id, other.id) && Objects.equals(name, other.name)
 				&& Objects.equals(password, other.password);
 	}
 }
