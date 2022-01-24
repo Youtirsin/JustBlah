@@ -11,8 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.alibaba.fastjson.JSON;
-import com.youtirsin.blah.message.MessageResult;
-import com.youtirsin.blah.message.ResultTool;
+import com.youtirsin.blah.data.Result;
+import com.youtirsin.blah.data.ResultTool;
 
 @Configuration
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -20,7 +20,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		MessageResult result = ResultTool.success();
+		Result<Integer> result = ResultTool.success();
 		response.setContentType("text/json;charset=utf-8");
 		response.getWriter().write(JSON.toJSONString(result));
 	}

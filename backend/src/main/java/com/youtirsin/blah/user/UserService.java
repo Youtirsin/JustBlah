@@ -1,5 +1,6 @@
 package com.youtirsin.blah.user;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.youtirsin.blah.message.MessageResult;
-import com.youtirsin.blah.message.ResultCode;
-import com.youtirsin.blah.message.ResultTool;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -30,25 +27,45 @@ public class UserService implements UserDetailsService {
 				.orElseThrow(()-> new UsernameNotFoundException(username + "Not found."));
 	}
 	
-	public MessageResult signUp(User user) {
-		if (userRepository.findByName(user.getName()).isPresent()) {
-			return ResultTool.fail(ResultCode.USER_ACCOUNT_ALREADY_EXIST);
+	public void signUp(User user) throws Exception {
+		// throws exception if user already exists
+		try {
+			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+			user.setDescription("介绍一下自己吧:)");
+			userRepository.save(user);			
+		}catch (Exception e) {
+			throw new Exception();
 		}
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		userRepository.save(user);
-		return ResultTool.success();
 	}
 
-	public MessageResult reset(User user) {
-		Optional<User> u = userRepository.findByName(user.getName());
-		if (!u.isPresent()) {
-			return ResultTool.fail(ResultCode.USER_ACCOUNT_NOT_EXIST);
+	public void reset(User user){
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		userRepository.save(user);
+	}
+	
+	public User getUserWithName(String name) throws Exception { 
+		// throws exception that the user does not exist
+		Optional<User> user = userRepository.findByName(name);
+		if (!user.isPresent()) {
+			throw new Exception();
 		}
-		if (!u.get().getEmail().equals(user.getEmail())) {
-			return ResultTool.fail(ResultCode.USER_RESET_VERIFIY_FAIL);
+		return user.get();
+	}
+
+	public void updateUser(User user) {
+		userRepository.save(user);
+	}
+
+	public ArrayList<String> searchUsers(String keyword) {
+		
+		Iterable<User> searched = userRepository.findAll();
+		ArrayList<String> res = new ArrayList<>();
+		for (User user : searched) {
+			String name = user.getName();
+			if (name.contains(keyword)) {
+				res.add(name);
+			}
 		}
-		u.get().setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		userRepository.save(u.get());
-		return ResultTool.success();
+		return res;
 	}
 }

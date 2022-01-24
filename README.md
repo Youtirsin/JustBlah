@@ -1,2 +1,2 @@
 # Just Blah
- A IM app with SpringBoot and SocketIO.
+ A IM app with SpringBoot and Websocket.

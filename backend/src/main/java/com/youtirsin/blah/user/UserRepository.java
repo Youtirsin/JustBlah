@@ -9,4 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 	Optional<User> findByName(String name);
+	// @Query(value = "select name from user where name like '%:word%'", nativeQuery = true)
+	// ArrayList<String> findAllWithWord(String word);
 }

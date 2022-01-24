@@ -11,9 +11,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import com.alibaba.fastjson.JSON;
-import com.youtirsin.blah.message.MessageResult;
-import com.youtirsin.blah.message.ResultCode;
-import com.youtirsin.blah.message.ResultTool;
+import com.youtirsin.blah.data.Result;
+import com.youtirsin.blah.data.ResultCode;
+import com.youtirsin.blah.data.ResultTool;
 
 @Configuration
 public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -21,7 +21,7 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		MessageResult result = ResultTool.fail(ResultCode.USER_NOT_LOGIN);
+		Result<Integer> result = ResultTool.fail(ResultCode.USER_NOT_LOGIN);
 		response.setContentType("text/json;charset=utf-8");
 		response.getWriter().write(JSON.toJSONString(result));
 	}

@@ -1,17 +1,17 @@
 package com.youtirsin.blah.invitation;
 
 public class FriendInvitationRequest {
-	private final String from;
-	private final String to;
+	private final String target;
+
+	public FriendInvitationRequest() {
+		target = "";
+	}
+	public FriendInvitationRequest(String target) {
+		this.target = target;
+	}
+
+	public String getTarget() {
+		return target;
+	}
 	
-	public FriendInvitationRequest(String from, String to) {
-		this.from = from;
-		this.to = to;
-	}
-	public String getFrom() {
-		return from;
-	}
-	public String getTo() {
-		return to;
-	}
 }

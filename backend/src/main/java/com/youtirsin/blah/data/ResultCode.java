@@ -1,4 +1,4 @@
-package com.youtirsin.blah.message;
+package com.youtirsin.blah.data;
 
 public enum ResultCode {
 	SUCCESS(200, "success"),
@@ -11,7 +11,11 @@ public enum ResultCode {
 	USER_RESET_VERIFIY_FAIL(2005, "user verification failed"),
 	
 	INVITATION_INVALID(2006, "invalid invitation"),
-	INVITATION_ALREADY_EXIST(2007, "invitation already sent");
+	INVITATION_ALREADY_EXIST(2007, "invitation already sent"),
+	
+	FRIEND_ALREADY(2008, "already been friends"),
+
+	GROUP_NOT_EXIST(2009, "group not exist");
 	
 	private Integer code;
     private String msg;

@@ -14,7 +14,7 @@
 	<name>blah</name>
 	<description>An Instance Chat app with Websocket</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -48,6 +48,10 @@
 		    <groupId>com.alibaba</groupId>
 		    <artifactId>fastjson</artifactId>
     		<version>1.2.78</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
 	</dependencies>
 

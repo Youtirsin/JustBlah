@@ -2,10 +2,12 @@ package com.youtirsin.blah.invitation;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -16,7 +18,7 @@ import com.youtirsin.blah.user.User;
 @Entity
 @Table(
 		uniqueConstraints = @UniqueConstraint(
-				columnNames = { "from", "to" }
+				columnNames = { "from_id", "to_id" }
 		)
 )
 public class FriendInvitation {
@@ -27,9 +29,11 @@ public class FriendInvitation {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, 
 						generator = "friend_invite_sequence")
 	private Long id;
-	@OneToOne(cascade = CascadeType.ALL, optional = true)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "from_id", foreignKey = @ForeignKey(name = "FROM_ID_FK"))
 	private User from;
-	@OneToOne(cascade = CascadeType.ALL, optional = true)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "to_id", foreignKey = @ForeignKey(name = "TO_ID_FK"))
 	private User to;
 	private boolean rejected;
 	
