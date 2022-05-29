@@ -1,5 +1,10 @@
-<template class='red'>
-  <router-view/>
+<script setup>
+// This starter template is using Vue 3 <script setup> SFCs
+// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+</script>
+
+<template>
+  <router-view></router-view>
 </template>
 
 <style>
@@ -10,8 +15,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.red {
-  border: 1px red solid;
 }
 </style>

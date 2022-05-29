@@ -1,44 +1,92 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
+import { createRouter, createWebHistory } from "vue-router"
+import Home from "../pages/Home.vue"
+import Login from "../pages/Login.vue"
+import SignUp from "../components/SignUp.vue"
+import SignIn from "../components/SignIn.vue"
+import Reset from "../components/Reset.vue"
+
+import Contact from "../components/Contact.vue"
+import Message from "../components/Message.vue"
+import Info from "../components/Info.vue"
+
+import ContactFriendWindow from "../components/ContactFriendWindow.vue"
+import ContactGroupWindow from "../components/ContactGroupWindow.vue"
+import WhiteBoard from "../components/WhiteBoard.vue"
+import MessageWindow from "../components/MessageWindow.vue"
+import InfoWindow from "../components/InfoWindow.vue"
 
 const routes = [
   {
-    path: '/login',
-    component: Login
+    path: "/",
+    redirect: "/home"
   },
   {
-    path: '/login/:action',
-    component: Login
+    path: "/home",
+    component: Home,
+    children: [
+      {
+        path: "contact",
+        components: {
+          list: Contact,
+          window: WhiteBoard
+        }
+      },
+      {
+        path: "contact/friend",
+        components: {
+          list: Contact,
+          window: ContactFriendWindow
+        }
+      },
+      {
+        path: "contact/group",
+        components: {
+          list: Contact,
+          window: ContactGroupWindow
+        }
+      },
+      {
+        path: "message",
+        components: {
+          list: Message,
+          window: MessageWindow
+        }
+      },
+      {
+        path: "info",
+        components: {
+          list: Info,
+          window: InfoWindow
+        }
+      }
+    ]
   },
   {
-    path: '/home',
-    component: Home
-  },
-  {
-    path: '/home/:navi',
-    component: Home
-  },
-  {
-    path: '/home/:navi/:win',
-    component: Home
-  },
-  {
-    path: '/home/:navi/:win/:type',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: "/login",
+    component: Login,
+    children: [
+      {
+        path: "",
+        redirect: "/login/signup"
+      },
+      {
+        path: "signup",
+        component: SignUp
+      },
+      {
+        path: "signin",
+        component: SignIn
+      },
+      {
+        path: 'reset',
+        component: Reset
+      }
+    ]
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes
 })
 
